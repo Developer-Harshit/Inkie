@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "Paintline";
+  src: url("/font/paintline.ttf") format("ttf");
+}
+@font-face {
+  font-family: "Sketch";
+  src: url("/font/sketch.ttf") format("ttf");
+}
+:root {
+  font-family: "Paintline", "Sketch", sans-serif;
+}
+* {
+  margin: 0;
+}
+
+canvas {
+  aspect-ratio: auto;
+}
+video {
+  aspect-ratio: auto;
+  max-width: 60svw;
+  max-height: 60svh;
+  display: block;
+  opacity: 0;
+  touch-action: none;
+  user-select: none;
+  z-index: -5000;
+  position: absolute;
+}
