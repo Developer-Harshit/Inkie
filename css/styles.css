@@ -1,29 +1,38 @@
 @font-face {
-  font-family: "Paintline";
-  src: url("/font/paintline.ttf") format("ttf");
+    font-family: Paintline;
+    src: url("/font/paintline.ttf");
 }
 @font-face {
-  font-family: "Sketch";
-  src: url("/font/sketch.ttf") format("ttf");
+    font-family: Sketch;
+    src: url("/font/sketch.ttf");
 }
 :root {
-  font-family: "Paintline", "Sketch", sans-serif;
+    font-family: Paintline;
+    font-weight: bolder;
+    letter-spacing: 1px;
+    color: rgb(57, 59, 59);
+    background-color: antiquewhite;
+}
+h1 {
+    font-family: Sketch;
 }
 * {
-  margin: 0;
+    margin: 0;
 }
 
 canvas {
-  aspect-ratio: auto;
+    aspect-ratio: auto;
+    max-width: 60svw;
+    max-height: 60svh;
 }
 video {
-  aspect-ratio: auto;
-  max-width: 60svw;
-  max-height: 60svh;
-  display: block;
-  opacity: 0;
-  touch-action: none;
-  user-select: none;
-  z-index: -5000;
-  position: absolute;
+    aspect-ratio: auto;
+    max-width: 95svw;
+    max-height: 80svh;
+    display: block;
+    opacity: 0;
+    touch-action: none;
+    user-select: none;
+    z-index: -5000;
+    position: absolute;
 }
