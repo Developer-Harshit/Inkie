@@ -1,64 +1,186 @@
 window.app = {};
+window.seriously = {};
+window.target = {};
+window.src = {};
+
 app.init = false;
-app.initcam = false;
-app.videoSource = document.createElement("source");
-app.videoSource.src = "";
-app.videoElement = document.createElement("video");
-app.videoElement.controls = true;
-app.videoElement.appendChild(app.videoSource);
 
-app.camElement = document.createElement("video");
+app.video_mode = 0;
 
-app.canvas = document.createElement("canvas");
-app.canvas.getContext("webgl", {
-    antialias: false,
-    depth: false,
-});
+// 0 = loading
+// 1 = started
 
+app.change_canvas_state = (state = 0, msg = "loading...") => {
+    let cnvDiv = document.getElementById("cnv-div");
+    let loadingDiv = document.getElementById("loading-div");
+    let effectSection = document.getElementById("effects-section");
+    let controlSection = document.getElementById("controls-section");
+
+    if (state === 0) {
+        cnvDiv.style.display = "none";
+        effectSection.style.display = "none";
+        controlSection.style.display = "none";
+        loadingDiv.style.display = "flex";
+        loadingDiv.innerText = msg;
+    } else {
+        cnvDiv.style.display = "flex";
+        loadingDiv.style.display = "none";
+        effectSection.style.display = "block";
+    }
+};
+
+// mode 0 = storage , mode 1 = camera
+// state 0 = loading state 1 = started
+app.change_video_mode = (mode = 0) => {
+    let controlSection = document.getElementById("controls-section");
+    let camButton = document.getElementById("cam-btn");
+    let fileButton = document.getElementById("file-btn");
+
+    if (mode == 0) {
+        controlSection.style.display = "block";
+        // turn off web cam ///////////
+        app.cam.pause();
+        app.cam.src = "";
+        try {
+            const track = app.localstream.getTracks();
+
+            track[0].stop();
+            console.log("Camera off");
+        } catch (e) {
+            console.error("Error in turning off camera", e);
+        }
+
+        //////////////////////////////
+        // play main video
+        app.vid.play();
+        // change class
+        fileButton.classList.add("active");
+        camButton.classList.remove("active");
+    } else {
+        controlSection.style.display = "none";
+        // turn off main video
+        app.vid.pause();
+        // play cam
+        app.cam.play();
+        // change class
+        camButton.classList.add("active");
+        fileButton.classList.remove("active");
+    }
+};
+
+app.setup = () => {
+    app.vid = document.getElementById("main-video");
+    app.cam = document.getElementById("cam-video");
+    app.change_canvas_state(0, "Select video to start");
+    videoSource = document.querySelector("#main-video source");
+
+    let camButton = document.getElementById("cam-btn");
+    camButton.addEventListener("click", () => {
+        app.change_canvas_state(0);
+
+        navigator.mediaDevices
+            .getUserMedia({
+                video: true,
+                audio: false,
+            })
+            .then((stream) => {
+                app.localstream = stream;
+                app.cam.srcObject = stream;
+                app.start(app.cam);
+                app.change_video_mode(1);
+            })
+            .catch((err) => {
+                console.error("something bad happened", err);
+            });
+    });
+
+    // using file
+    const fileInput = document.getElementById("file-input");
+    fileInput.addEventListener("change", (e) => {
+        if (!(e.target.files && e.target.files[0])) return;
+        app.change_canvas_state(0);
+        const reader = new FileReader();
+
+        reader.onload = function (ev) {
+            let videoSource = document.querySelector("#main-video source");
+            videoSource.src = ev.target.result;
+
+            app.vid.load();
+
+            app.start(app.vid);
+            app.change_canvas_state();
+            app.change_video_mode(0);
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        fileInput.type = "text";
+        fileInput.type = "file";
+    });
+};
 app.initilize = () => {
-    const appDiv = document.getElementById("app");
-
-    app.canvas.id = "main-canvas";
-    appDiv.appendChild(app.canvas);
-
-    app.videoElement.id = "main-video";
-    appDiv.appendChild(app.videoElement);
-
-    app.videoElement.addEventListener("canplay", () => {
-        app.resize(app.videoElement);
+    if (app.init) return;
+    app.vid.addEventListener("canplay", () => {
+        app.resize(app.vid);
     });
-    app.videoElement.loop = true;
     app.setControlEvents();
-
-    app.camElement.id = "cam-video";
-    appDiv.appendChild(app.camElement);
-    app.camElement.addEventListener("canplay", () => {
-        app.resize(app.camElement);
+    app.cam.addEventListener("canplay", () => {
+        app.resize(app.cam);
     });
+    window.seriously = new Seriously();
+
+    filters = [seriously.effect("ink"), seriously.effect("crosshatch")];
+
+    let effectLabels = document.querySelectorAll("#effects-section label");
+    for (let eLabel of effectLabels) {
+        eLabel.addEventListener("click", () => {
+            for (let other of effectLabels) {
+                other.classList.remove("active");
+            }
+            eLabel.classList.add("active");
+        });
+    }
+    let effectRadios = document.querySelectorAll("#effects-section input");
+    for (let eRadio of effectRadios) {
+        eRadio.addEventListener("change", () => {
+            app.connect_effect();
+        });
+    }
 
     app.init = true;
 };
+
 app.setControlEvents = () => {
     let playButton = document.getElementById("play-btn");
-    playButton.addEventListener("click", () => app.videoElement.play());
-
     let pauseButton = document.getElementById("pause-btn");
-    pauseButton.addEventListener("click", () => app.videoElement.pause());
-
     let plusTenButton = document.getElementById("plus-10");
-    plusTenButton.addEventListener("click", () => {
-        let newTime = app.videoElement.currentTime + 10;
-
-        app.videoElement.currentTime = newTime;
-    });
     let minusTenButton = document.getElementById("minus-10");
-    minusTenButton.addEventListener("click", () => {
-        let newTime = app.videoElement.currentTime - 10;
+    playButton.addEventListener("click", () => {
+        app.vid.play();
+        seriously.go();
+        playButton.style.display = "none";
+        pauseButton.style.display = "inline-block";
+    });
 
-        app.videoElement.currentTime = Math.max(0, newTime);
+    pauseButton.addEventListener("click", () => {
+        app.vid.pause();
+        seriously.stop();
+        pauseButton.style.display = "none";
+        playButton.style.display = "inline-block";
+    });
+
+    plusTenButton.addEventListener("click", () => {
+        let newTime = app.vid.currentTime + 10;
+
+        app.vid.currentTime = newTime;
+    });
+    minusTenButton.addEventListener("click", () => {
+        let newTime = app.vid.currentTime - 10;
+
+        app.vid.currentTime = Math.max(0, newTime);
     });
 };
+
 app.resize = (ele) => {
+    if (!app.init) app.initilize();
     let x = ele.videoWidth;
     let y = ele.videoHeight;
 
@@ -67,78 +189,46 @@ app.resize = (ele) => {
 
     app.target.width = x;
     app.target.height = y;
-
-    // app.canvas.style.width = x + "px";
-    // app.canvas.style.height = y + "px";
 };
-app.start = (srcId = "#main-video") => {
-    if (app.target) app.target.destroy();
-    if (app.src) app.src.destroy();
-    if (app.reformat) app.reformat.destroy();
-    if (app.effect) app.effect.destroy();
 
-    window.seriously = new Seriously();
-
-    //   adding source and target
-    app.src = seriously.source(srcId);
-
-    app.target = seriously.target("#main-canvas");
-
-    app.effect = seriously.effect("ink");
-
-    // connecting them
-
-    app.effect.source = app.src;
-
-    app.target.source = app.effect;
-
-    seriously.go();
-};
-// using webcam
-const camButton = document.getElementById("cam-btn");
-camButton.addEventListener("click", () => {
-    let s = Math.min(innerWidth, innerHeight);
-    let r = 5 / 4;
-    if (app.initcam) {
-        app.start("#cam-video");
-        app.resize(app.camElement);
-        return;
+app.connect_effect = () => {
+    let current_effect = document.querySelector(
+        'input[name="effects"]:checked'
+    );
+    if (current_effect) {
+        app.effect = filters[+current_effect.value];
+    } else {
+        app.effect = filters[0];
+        console.log("Setted default effect");
     }
 
-    navigator.mediaDevices
-        .getUserMedia({
-            video: true,
-            audio: false,
-        })
-        .then((stream) => {
-            app.camElement.srcObject = stream;
-            app.camElement.play();
-            if (!app.init) app.initilize();
-            app.start("#cam-video");
-            app.initcam = true;
-        })
-        .catch((err) => {
-            console.error("something bad happened");
-        });
-});
+    // connecting them
+    app.effect.source = app.src;
+    app.target.source = app.effect;
+};
 
-// using file
-const fileInput = document.getElementById("file-input");
-fileInput.addEventListener("change", (e) => {
-    if (!(e.target.files && e.target.files[0])) return;
+app.start = (mysource = "#main-video") => {
+    if (!app.init) app.initilize();
+    if (app.src) app.src.destroy();
+    if (app.target) app.target.destroy();
+    //   adding source and target
+    app.src = seriously.source(mysource);
+    app.target = seriously.target("#main-canvas");
 
-    const reader = new FileReader();
+    app.connect_effect();
 
-    reader.onload = function (ev) {
-        app.init = false;
-        seriously = null;
-        app.videoSource.src = ev.target.result;
-        app.videoElement.load();
-        app.videoElement.play();
+    app.resize(mysource);
+    seriously.go();
+    setTimeout(() => {
+        app.change_canvas_state(1);
+    }, 10);
+};
 
-        if (!app.init) app.initilize();
-
-        app.start();
-    };
-    reader.readAsDataURL(e.target.files[0]);
-});
+// Call setup fubnction
+window.addEventListener(
+    "DOMContentLoaded",
+    () => {
+        app.setup();
+    },
+    { once: true }
+);

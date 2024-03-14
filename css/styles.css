@@ -1,38 +1,136 @@
 @font-face {
     font-family: Paintline;
-    src: url("/font/paintline.ttf");
+    src: url("/assets/fonts/paintline.ttf");
 }
 @font-face {
     font-family: Sketch;
-    src: url("/font/sketch.ttf");
+    src: url("/assets/fonts/sketch.ttf");
 }
-:root {
+
+* {
+    margin: 0;
     font-family: Paintline;
     font-weight: bolder;
     letter-spacing: 1px;
     color: rgb(57, 59, 59);
-    background-color: antiquewhite;
+}
+body {
+    background-image: url(/assets/paper.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100svh;
 }
 h1 {
     font-family: Sketch;
 }
-* {
-    margin: 0;
+h2 {
+    font-size: 1rem;
 }
-
+section {
+    margin-bottom: 1rem;
+}
 canvas {
     aspect-ratio: auto;
-    max-width: 60svw;
-    max-height: 60svh;
+    max-width: 100svw;
+    max-height: 80svh;
+    margin: auto;
 }
 video {
-    aspect-ratio: auto;
-    max-width: 95svw;
-    max-height: 80svh;
-    display: block;
     opacity: 0;
+    z-index: -5000;
+    aspect-ratio: auto;
     touch-action: none;
     user-select: none;
-    z-index: -5000;
     position: absolute;
+    display: none;
+}
+header,
+footer {
+    padding: 0.6rem;
+    margin-bottom: 1rem;
+}
+footer {
+    margin: 3rem 0;
+    text-align: center;
+}
+
+/* button styles  */
+
+.btn svg {
+    width: 1rem;
+    height: 1rem;
+}
+.btn {
+    display: inline-block;
+    padding: 0.8rem;
+    margin: 0.2rem;
+    font-size: 1.5rem;
+    border: 1px solid rgb(238, 237, 237);
+    color: rgb(22, 20, 20);
+
+    backdrop-filter: url(/assets/wood.svg#gggrain-filter);
+}
+
+/* loading styles */
+#loading-div,
+#cnv-div {
+    background-color: rgba(0, 0, 0, 0.036);
+    background: url(/assets/black.svg);
+    border: 5px solid rgba(33, 3, 3, 0.732);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#loading-div {
+    height: 30svh;
+    width: 100%;
+    font-size: 3rem;
+}
+/* for input fields */
+input {
+    display: none;
+}
+/* tabs */
+#tabs-section .btn {
+    background-color: rgba(104, 40, 8, 0.193);
+}
+
+#tabs-section .btn.active {
+    background-color: rgba(104, 40, 8, 0.616);
+    color: white;
+}
+#tabs-section .btn:hover,
+#tabs-section .btn:active {
+    background-color: rgba(134, 39, 10, 0.404);
+    color: white;
+}
+/* effects */
+#effects-section .btn {
+    background-color: rgba(104, 8, 75, 0.193);
+    padding: 0.4rem;
+}
+
+#effects-section .btn:hover,
+#effects-section .btn:active {
+    background-color: rgba(104, 8, 86, 0.404);
+    color: white;
+}
+#effects-section .btn.active {
+    background-color: rgba(104, 8, 42, 0.616);
+    color: white;
+}
+
+/* controls */
+#controls-section {
+    text-align: center;
+}
+#controls-section .btn {
+    background-color: rgba(8, 88, 104, 0.193);
+    padding: 0.4rem;
+}
+
+#controls-section .btn:hover,
+#controls-section .btn:active {
+    background-color: rgba(8, 77, 104, 0.404);
+    color: white;
 }

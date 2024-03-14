@@ -32,10 +32,10 @@
                 "uniform vec2 resolution;",
                 "uniform sampler2D source;",
                 // how close lines are
-                "float pDensity = 5.0;",
+                "float pDensity = 6.0;",
 
                 // width of lines
-                "float pWidth = 2.0;",
+                "float pWidth = 3.0;",
 
                 // threadhold of each hatch lines
                 "float hatch_1 = 0.9;",
@@ -59,8 +59,6 @@
                 // return as luma,
                 "return 0.2126 * c.r + 0.7152 * c.g + 0.0722 * c.b;",
                 "}",
-
-                // get color
 
                 "void main(void) {",
                 "vec2 fragCoord = vTexCoord * resolution;",
@@ -116,12 +114,11 @@
                 // hack: use g^2 to conceal noise in the video
                 "float g = gx * gx + gy * gy;",
                 "res *= (1.0 - g);",
-                "gl_FragColor = vec4(res+ tex.rgb*tex.rgb * tex.rgb*1.3 , 1.0);",
-                // fun stuff
+                "tex = tex*1.1;",
+                "float n = 5.0;",
+                "tex = floor(tex * (n-1.0)+0.5)/(n-1.0);",
 
-                // "vec3 col = tex.rgb*1.2;",
-
-                // "gl_FragColor = vec4(res+(1.0-res)*col.rgb , 1.0);",
+                "gl_FragColor = vec4(res + tex.rgb , 1.0);",
 
                 "}",
             ].join("\n");

@@ -41,24 +41,24 @@
                 "uniform sampler2D source;",
                 "void main(void) {",
                 // Get the gamma corrected luminance
-                "vec4 tex = texture2D(source,vTexCoord);",
-                "float v = dot(vec3(.2, .7, .1), pow(tex.rgb, vec3(0.5)));",
+                "   vec4 tex = texture2D(source,vTexCoord);",
+                "   float v = dot(vec3(.2, .7, .1), pow(tex.rgb, vec3(0.5)));",
 
                 // Tiling
-                "ivec2 n = ivec2(mod(vTexCoord*resolution, 4.));",
+                "   ivec2 n = ivec2(mod(vTexCoord*resolution, 4.));",
 
                 // Thresholds
 
-                "vec4 t0 = vec4(0., 4., 2., 6.) / 8.0;",
-                "vec4 t1 = vec4(1., 5., 3., 7.) / 8.0;",
+                "   vec4 t0 = vec4(0., 4., 2., 6.) / 8.0;",
+                "   vec4 t1 = vec4(1., 5., 3., 7.) / 8.0;",
 
                 // Quantize pixel brightness on both axes
 
-                "				if (t0[1] < v && t1[1] < v) {",
-                "					gl_FragColor = vec4(vec3(1.0),1.0);",
-                "				  } else {",
-                "					gl_FragColor = vec4(tex.rgb*tex.rgb*0.6,1.0);",
-                "				  }",
+                "   if (t0[1] < v && t1[1] < v) {",
+                "       gl_FragColor = vec4(vec3(1.0),1.0);",
+                "   } else {",
+                "       gl_FragColor = vec4(tex.rgb*0.6*tex.rgb,1.0);",
+                "}",
 
                 // "gl_FragColor = vec4(t0[n.x] < v && t1[n.y] < v);",
                 "}",
