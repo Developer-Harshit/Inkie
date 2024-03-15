@@ -127,7 +127,11 @@ app.initilize = () => {
     });
     window.seriously = new Seriously();
 
-    filters = [seriously.effect("ink"), seriously.effect("comic")];
+    filters = [
+        seriously.effect("ink"),
+        seriously.effect("comic"),
+        seriously.effect("kuwahara"),
+    ];
 
     let effectLabels = document.querySelectorAll("#effects-section label");
     for (let eLabel of effectLabels) {
@@ -183,9 +187,6 @@ app.resize = (ele) => {
     if (!app.init) app.initilize();
     let x = ele.videoWidth;
     let y = ele.videoHeight;
-
-    app.effect.width = x;
-    app.effect.height = y;
 
     app.target.width = x;
     app.target.height = y;

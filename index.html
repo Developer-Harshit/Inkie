@@ -5,8 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Video Effects</title>
         <link rel="stylesheet" href="/css/styles.css" />
-        <script src="/scripts/lib/htmlslider.js"></script>
         <script src="/scripts/lib/seriously.js"></script>
+
+        <script src="/scripts/lib/htmlslider.js"></script>
+
+        <script src="/scripts/effects/effect.kuwahara.js"></script>
         <script src="/scripts/effects/effect.comic.js"></script>
         <script src="/scripts/effects/effect.ink.js"></script>
 
@@ -40,10 +43,12 @@
                 <div>
                     <label for="ink" class="btn active">Ink</label>
                     <label for="comic" class="btn">Comic</label>
+                    <label for="kuwahara" class="btn">Painted</label>
                 </div>
 
                 <input type="radio" id="ink" name="effects" checked value="0" />
                 <input type="radio" id="comic" name="effects" value="1" />
+                <input type="radio" id="kuwahara" name="effects" value="2" />
             </section>
 
             <!-- for displaying video or loading  -->
