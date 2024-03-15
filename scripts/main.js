@@ -127,7 +127,7 @@ app.initilize = () => {
     });
     window.seriously = new Seriously();
 
-    filters = [seriously.effect("ink"), seriously.effect("crosshatch")];
+    filters = [seriously.effect("ink"), seriously.effect("comic")];
 
     let effectLabels = document.querySelectorAll("#effects-section label");
     for (let eLabel of effectLabels) {

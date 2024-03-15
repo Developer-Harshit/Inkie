@@ -21,7 +21,7 @@
 })(window, function (Seriously) {
     "use strict";
 
-    Seriously.plugin("crosshatch", {
+    Seriously.plugin("comic", {
         commonShader: true,
         shader: function (inputs, shaderSource) {
             shaderSource.fragment = [
@@ -132,7 +132,7 @@
                 shaderDirty: false,
             },
         },
-        title: "Crosshatch",
-        description: "Cross hatch images",
+        title: "Comic",
+        description: "Comic images",
     });
 });
