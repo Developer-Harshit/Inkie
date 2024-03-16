@@ -1,136 +1,159 @@
+
+
 @font-face {
-    font-family: Paintline;
-    src: url("/assets/fonts/paintline.ttf");
+  font-family: Paintline;
+  src: url("/assets/fonts/paintline.ttf");
 }
 @font-face {
-    font-family: Sketch;
-    src: url("/assets/fonts/sketch.ttf");
+  font-family: Sketch;
+  src: url("/assets/fonts/sketch.ttf");
 }
 
 * {
-    margin: 0;
-    font-family: Paintline;
-    font-weight: bolder;
-    letter-spacing: 1px;
-    color: rgb(57, 59, 59);
+  margin: 0;
+
+  font-family: Paintline;
+  font-weight: bolder;
+  letter-spacing: 1px;
+  color: rgb(57, 59, 59);
 }
 body {
-    background-image: url(/assets/paper.svg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    min-height: 100svh;
+  background-image: url(/assets/paper.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100svh;
 }
 h1 {
-    font-family: Sketch;
+  font-family: Sketch;
 }
 h2 {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 section {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.2rem 0.4rem;
 }
+
 canvas {
-    aspect-ratio: auto;
-    max-width: 100svw;
-    max-height: 80svh;
-    margin: auto;
+  aspect-ratio: auto;
+  max-width: 100svw;
+  max-height: 80svh;
+  margin: auto;
 }
 video {
-    opacity: 0;
-    z-index: -5000;
-    aspect-ratio: auto;
-    touch-action: none;
-    user-select: none;
-    position: absolute;
-    display: none;
+  opacity: 0;
+  z-index: -5000;
+  aspect-ratio: auto;
+  -ms-touch-action: none;
+      touch-action: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  position: absolute;
+  display: none;
 }
 header,
 footer {
-    padding: 0.6rem;
-    margin-bottom: 1rem;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
 }
 footer {
-    margin: 3rem 0;
-    text-align: center;
+  margin: 3rem 0;
+  text-align: center;
 }
 
 /* button styles  */
 
 .btn svg {
-    width: 1rem;
-    height: 1rem;
+  width: 1rem;
+  height: 1rem;
 }
 .btn {
-    display: inline-block;
-    padding: 0.8rem;
-    margin: 0.2rem;
-    font-size: 1.5rem;
-    border: 1px solid rgb(238, 237, 237);
-    color: rgb(22, 20, 20);
+  display: inline-block;
+  padding: 0.8rem;
+  margin: 0.2rem;
+  font-size: 1.5rem;
+  border: 1px solid rgb(238, 237, 237);
+  color: rgb(22, 20, 20);
 
-    backdrop-filter: url(/assets/wood.svg#gggrain-filter);
+  -webkit-backdrop-filter: url(/assets/wood.svg#gggrain-filter);
+
+          backdrop-filter: url(/assets/wood.svg#gggrain-filter);
 }
 
 /* loading styles */
 #loading-div,
 #cnv-div {
-    background-color: rgba(0, 0, 0, 0.036);
-    background: url(/assets/black.svg);
-    border: 5px solid rgba(33, 3, 3, 0.732);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background-color: rgba(0, 0, 0, 0.036);
+  background: url(/assets/black.svg);
+  border: 5px solid rgba(33, 3, 3, 0.732);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 #loading-div {
-    height: 30svh;
-    width: 100%;
-    font-size: 3rem;
+  height: 30svh;
+  width: 100%;
+  font-size: 3rem;
 }
 /* for input fields */
 input {
-    display: none;
+  display: none;
 }
 /* tabs */
 #tabs-section .btn {
-    background-color: rgba(104, 40, 8, 0.193);
+  background-color: rgba(104, 40, 8, 0.193);
 }
 
 #tabs-section .btn.active {
-    background-color: rgba(104, 40, 8, 0.616);
-    color: white;
+  background-color: rgba(104, 40, 8, 0.616);
+  color: white;
 }
 #tabs-section .btn:hover,
 #tabs-section .btn:active {
-    background-color: rgba(134, 39, 10, 0.404);
-    color: white;
+  background-color: rgba(134, 39, 10, 0.404);
+  color: white;
 }
 /* effects */
 #effects-section .btn {
-    background-color: rgba(104, 8, 75, 0.193);
-    padding: 0.4rem;
+  background-color: rgba(104, 8, 75, 0.193);
+  padding: 0.4rem;
 }
 
 #effects-section .btn:hover,
 #effects-section .btn:active {
-    background-color: rgba(104, 8, 86, 0.404);
-    color: white;
+  background-color: rgba(104, 8, 86, 0.404);
+  color: white;
 }
 #effects-section .btn.active {
-    background-color: rgba(104, 8, 42, 0.616);
-    color: white;
+  background-color: rgba(104, 8, 42, 0.616);
+  color: white;
 }
 
 /* controls */
 #controls-section {
-    text-align: center;
+  text-align: center;
 }
 #controls-section .btn {
-    background-color: rgba(8, 88, 104, 0.193);
-    padding: 0.4rem;
+  background-color: rgba(8, 88, 104, 0.193);
+  padding: 0.4rem;
 }
 
 #controls-section .btn:hover,
 #controls-section .btn:active {
-    background-color: rgba(8, 77, 104, 0.404);
-    color: white;
+  background-color: rgba(8, 77, 104, 0.404);
+  color: white;
+}
+
+/* display */
+#display-section,
+#controls-section {
+  padding: 0rem;
 }

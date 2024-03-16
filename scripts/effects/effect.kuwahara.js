@@ -46,7 +46,7 @@
                 // Also implemented by Brad Larson
 
                 "	vec2 src_size = 1. / resolution.xy;",
-                "const int radius = 6;",
+                "const int radius = 4;",
                 "vec4 lookup(int dx, int dy) {",
                 "   vec2 uv = src_size * vec2(dx, dy) + vTexCoord;",
                 "	return texture2D(source, uv);",
@@ -136,7 +136,7 @@
                 "		gl_FragColor = vec4(m3, 1.0);",
                 "	}",
                 "	gl_FragColor*=1.2;",
-                "	gl_FragColor = floor(gl_FragColor * (16.0-1.0)+0.5)/(16.0-1.0);",
+                "	gl_FragColor = floor(gl_FragColor * (10.0-1.0)+0.5)/(10.0-1.0);",
                 "	vec4 pixel = gl_FragColor;",
                 "	float r = random(vec2(time * vTexCoord.xy));",
                 "	float noise = snoise(vec3(vTexCoord * (1024.4 + r * 512.0), time)) * 0.5;",

@@ -3,21 +3,50 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Video Effects</title>
+
+        <!-- seo -->
+        <title>ChromoSketch</title>
+        <meta
+            name="description"
+            content="A simple app for applying artistic effects on video."
+        />
+        <meta name="theme-color" content="#ffffff" />
+        <link
+            rel="shortcut icon"
+            href="/assets/icons/android-chrome-512x512.png"
+        />
+        <link
+            rel="icon"
+            href="/assets/icons/android-launchericon-144-144.png"
+        />
+
+        <link
+            rel="apple-touch-icon"
+            href="/assets/icons/apple-touch-icon.png"
+        />
+        <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
+        <link rel="manifest" href="/assets/site.webmanifest" />
+
+        <!-- links -->
+
         <link rel="stylesheet" href="/css/styles.css" />
-        <script src="/scripts/lib/seriously.js"></script>
+        <script src="/scripts/lib/seriously.js" defer></script>
 
-        <script src="/scripts/lib/htmlslider.js"></script>
+        <script src="/scripts/lib/htmlslider.js" defer></script>
 
-        <script src="/scripts/effects/effect.kuwahara.js"></script>
-        <script src="/scripts/effects/effect.comic.js"></script>
-        <script src="/scripts/effects/effect.ink.js"></script>
+        <script src="/scripts/effects/effect.kuwahara.js" defer></script>
+        <script src="/scripts/effects/effect.comic.js" defer></script>
+        <script src="/scripts/effects/effect.ink.js" defer></script>
 
         <script src="/scripts/main.js" defer></script>
     </head>
     <body>
         <header>
-            <h1>Video Effects</h1>
+            <div>
+                <a href="/" style="font-size: 2rem; font-weight: bolder">
+                    ChromoSketch
+                </a>
+            </div>
         </header>
 
         <main>
@@ -52,7 +81,7 @@
             </section>
 
             <!-- for displaying video or loading  -->
-            <section>
+            <section id="display-section">
                 <div id="loading-div">Loading.....</div>
                 <div id="cnv-div">
                     <canvas id="main-canvas"></canvas>
